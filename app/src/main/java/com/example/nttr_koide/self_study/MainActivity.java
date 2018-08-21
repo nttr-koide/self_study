@@ -5,25 +5,24 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 public class MainActivity extends AppCompatActivity {
+
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Fragmentを作成します
-        MainFragment fragment1 = new MainFragment();
-        MainFragment fragment2 = new MainFragment();
-        // Fragmentの追加や削除といった変更を行う際は、Transactionを利用します
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        // 新しく追加を行うのでaddを使用します
-        // 他にも、よく使う操作で、replace removeといったメソッドがあります
-        // メソッドの1つ目の引数は対象のViewGroupのID、2つ目の引数は追加するfragment
-        transaction.add(R.id.container, fragment1.createInstance("hoge", Color.RED));
-        transaction.add(R.id.container, fragment2.createInstance("fuga", Color.BLUE));
-        // 最後にcommitを使用することで変更を反映します
-        transaction.commit();
+        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 }
